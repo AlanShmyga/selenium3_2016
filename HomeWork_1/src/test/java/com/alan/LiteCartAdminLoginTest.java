@@ -4,14 +4,20 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.HasCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.File;
 
 /**
  * Created by alan on 19.11.16.
@@ -22,7 +28,14 @@ public class LiteCartAdminLoginTest {
 
     @Before
     public void setup() {
-        driver = new ChromeDriver();
+        DesiredCapabilities capabs = new DesiredCapabilities();
+        capabs.setCapability(FirefoxDriver.MARIONETTE, false);
+        driver = new FirefoxDriver(
+                new FirefoxBinary(new File("/Applications/FirefoxESR.app/Contents/MacOS/firefox")),
+                new FirefoxProfile(),
+                capabs
+        );
+        System.out.println(((HasCapabilities)driver).getCapabilities());
         wait = new WebDriverWait(driver, 10);
     }
 
