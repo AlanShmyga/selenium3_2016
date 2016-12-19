@@ -18,6 +18,7 @@ public class CartTest {
 
     WebDriver driver;
     WebDriverWait wait;
+    String appLink = "http://localhost/litecart";
 
     @Before
     public void setup() {
@@ -28,17 +29,9 @@ public class CartTest {
 
     @Test
     public void addToCart() {
-        int expectedNumOfProductOnCart = 1;
-        int desiredNumberOfProductsOnCart = 3;
-        ProductPage product;
-        driver.get("http://localhost/litecart");
+        driver.get(appLink);
         HomePage homePage = new HomePage(driver, wait);
-        for(;expectedNumOfProductOnCart <= desiredNumberOfProductsOnCart; expectedNumOfProductOnCart++) {
-            product = homePage.openProductPage(expectedNumOfProductOnCart);
-            product.addToCard();
-            homePage.waitUntilItemsOnCardWillBe(expectedNumOfProductOnCart);
-            product.goToHome();
-        }
+        homePage.addProductsToCart(homePage);
         homePage.goToCheckOutPage().deleteAllItemsOnCart();
         assertTrue(homePage.getItemsOnCartNumber().equals(0));
     }

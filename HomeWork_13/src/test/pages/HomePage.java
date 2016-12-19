@@ -52,4 +52,16 @@ public class HomePage {
         driver.findElement(cartCheckOutLink).click();
         return new CheckOutPage(driver, wait);
     }
+
+    public void addProductsToCart(HomePage homePage) {
+        ProductPage product;
+        int expectedNumOfProductOnCart = 1;
+        int desiredNumberOfProductsOnCart = 3;
+        for(;expectedNumOfProductOnCart <= desiredNumberOfProductsOnCart; expectedNumOfProductOnCart++) {
+            product = homePage.openProductPage(expectedNumOfProductOnCart);
+            product.addToCard();
+            homePage.waitUntilItemsOnCardWillBe(expectedNumOfProductOnCart);
+            product.goToHome();
+        }
+    }
 }
